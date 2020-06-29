@@ -12,7 +12,7 @@ import iOSMovieDB
 class PresenterMovies: PresenterMoviesProtocol {
 
     var router: RouterMoviesInput?
-    var mainView: ViewMoviesProtocol?
+    weak var mainView: ViewMoviesProtocol?
     var interactor: InteractorMoviesProtocol?
 
     func fetchMovies() {

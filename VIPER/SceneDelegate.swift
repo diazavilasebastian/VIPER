@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iOSMovieDB
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowsScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let routerApp = AppRouter()
+        let service = ApiService(apiKey: "6893e0b3a6030f46d850edf87283de46")
+        let routerApp = AppRouter(provider: service)
         window?.rootViewController = routerApp.navigation
         window?.makeKeyAndVisible()
         window?.windowScene = windowsScene

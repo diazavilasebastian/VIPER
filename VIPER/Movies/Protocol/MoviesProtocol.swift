@@ -14,18 +14,18 @@ typealias PresenterMoviesProtocol = PresenterMoviesInputDelegate & PresenterMovi
 typealias InteractorMoviesProtocol = InteractorMoviesInputDelegate & InteractorMoviesOutputDelegate
 
 /// View movies protocol define all function he expose to other layer (presenter)
-protocol ViewMoviesInputDelegate {
+protocol ViewMoviesInputDelegate: class {
     func showMovies()
     func errorMovies()
 }
 
 /// View Movies protocol output define the object need to delegate all interaction of user
-protocol ViewMoviesOutputDelegate {
+protocol ViewMoviesOutputDelegate: class  {
     var presenter: PresenterMoviesProtocol? { get set }
 }
 
 /// Presenter movies protocol define all function expose to other layer (view, interactor)
-protocol PresenterMoviesInputDelegate {
+protocol PresenterMoviesInputDelegate: class {
     func fetchMovies()
     func successFetchMovies(movies: [MovieResume])
     func failureFetchMovies(error: Error)
@@ -33,31 +33,33 @@ protocol PresenterMoviesInputDelegate {
 }
 
 /// Presenter movies output define the object to delegate actions
-protocol PresenterMoviesOutputDelegate {
+protocol PresenterMoviesOutputDelegate: class {
     var mainView: ViewMoviesProtocol? { get set }
     var interactor: InteractorMoviesProtocol? { get set }
     var router: RouterMoviesInput? { get set }
 }
 
 /// Interactor protocol define all function he expose to other layers
-protocol InteractorMoviesInputDelegate {
+protocol InteractorMoviesInputDelegate: class {
     func fetchMovies()
     func getMovie(row: Int) -> MovieResume?
 }
 
 /// Interactor movies output define the object to delegate actions
-protocol InteractorMoviesOutputDelegate {
+protocol InteractorMoviesOutputDelegate: class {
     var presenter: PresenterMoviesProtocol? { get set }
 }
 
 /// Router movies input define all function expose to other layers (presenter)
-protocol RouterMoviesInput {
+protocol RouterMoviesInput: class {
+    var navigation: UINavigationController?{ get set }
+
     func start()
     func goToDetailMovie(movie: MovieResume)
 }
 
 //Movies datasource provider information to other layers
-protocol MoviesDataSourceProtocol {
+protocol MoviesDataSourceProtocol: class {
     /// Append Movies
     /// - Parameter moviesNews: list of movies Resume to be added to local information
     func append(moviesNews: [MovieResume])
