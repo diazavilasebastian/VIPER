@@ -11,6 +11,7 @@ import iOSMovieDB
 import SDWebImage
 
 class MoviesCollectionCellViewModel {
+    
     private let movieResume: MovieResume
 
     public var posterUrl: URL? {
