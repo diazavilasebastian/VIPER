@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import iOSUI
+import iOSMovieDB
 
 protocol MovieViewModelProtocol {
     var title: String { get }
@@ -30,6 +31,7 @@ class MovieViewController: UIViewController {
     }()
 
     var viewModel: MovieViewModelProtocol
+    var presenter: PresenterMovieDetailProtocol?
 
     init(viewModel: MovieViewModelProtocol) {
         self.viewModel = viewModel
@@ -47,6 +49,7 @@ class MovieViewController: UIViewController {
         self.configNavigation()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.view = mainView
+        presenter?.fetchDetails(from: viewModel.idMovie)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,4 +64,16 @@ class MovieViewController: UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
+}
+
+extension MovieViewController:ViewMovieDetailProtocol {
+    func showDetail(from movie: Movie) {
+        let viewModelDetail = MovieDetailViewModel(movie: movie)
+        viewModelDetail.configure(view: mainView)
+    }
+    
+    func errorFetchDetails(error: Error) {
+        
+    }
+    
 }

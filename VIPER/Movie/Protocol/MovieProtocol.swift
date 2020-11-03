@@ -14,7 +14,6 @@ typealias PresenterMovieDetailProtocol = PresenterMovieDetailInputDelegate & Pre
 typealias InteractorMovieDetailProtocol = InteractorMovieDetailInputDelegate & InteractorMovieDetailOutputDelegate
 
 protocol ViewMovieDetailInputDelegate: class {
-    func showDetail(from resume: MovieResume)
     func showDetail(from movie: Movie)
     func errorFetchDetails(error: Error)
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import iOSMovieDB
+import SDWebImage
 
 class MoviesRouter: RouterMoviesInput {
     
@@ -26,19 +27,35 @@ class MoviesRouter: RouterMoviesInput {
         let dataSource = MoviesDataSource()
         let interactor = InteractorMovies(dataSource: dataSource, provider: provider)
         let presenter = PresenterMovies()
-        let viewModelController = MoviesControllerViewModel(presenter: presenter, dataSource: dataSource)
+        let viewModelController = MoviesControllerViewModel(dataSource: dataSource)
         let controller = MoviesViewController(viewModel: viewModelController)
 
         presenter.interactor = interactor
         presenter.router = self
+        controller.presenter = presenter
+        presenter.mainView = controller
 
         interactor.presenter = presenter
         navigation?.setViewControllers([controller], animated: false)
     }
 
     func goToDetailMovie(movie: MovieResume) {
-
+        guard let movieURL = movie.urlPoster else { return }
+        guard let image = SDImageCache.shared.imageFromDiskCache(forKey: movieURL.absoluteString) else { return }
+    
+        guard let service = apiService else { return }
+        let provider = MovieProvider(service: service)
+        let interactor = MovieDetailInteractor(provider: provider)
+        let presenter = MovieDetailPresenter()
+        let viewModel = MovieViewModelResumen(movie: movie, image: image)
+        let controller = MovieViewController(viewModel: viewModel)
         
+        presenter.interactor = interactor
+        presenter.mainView = controller
+        interactor.presenter = presenter
+        controller.presenter = presenter
+        
+        navigation?.pushViewController(controller, animated: true)
     }
 
 

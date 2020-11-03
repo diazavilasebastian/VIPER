@@ -10,6 +10,5 @@ import Foundation
 import UIKit
 
 struct MoviesControllerViewModel: MoviesViewModel {
-    var presenter: PresenterMoviesProtocol
     var dataSource: UICollectionViewDataSource
 }

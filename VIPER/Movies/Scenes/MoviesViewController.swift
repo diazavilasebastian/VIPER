@@ -10,7 +10,6 @@ import UIKit
 import iOSUI
 
 protocol MoviesViewModel {
-    var presenter: PresenterMoviesProtocol { get set }
     var dataSource: UICollectionViewDataSource { get set }
 }
 
@@ -26,8 +25,6 @@ class MoviesViewController: UIViewController, ViewMoviesOutputDelegate {
 
     init(viewModel: MoviesViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.presenter = viewModel.presenter
-        self.presenter?.mainView = self
         mainView.dataSource = viewModel.dataSource
     }
 
