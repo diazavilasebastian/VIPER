@@ -29,7 +29,7 @@ class MoviesRouter: RouterMoviesInput {
         let presenter = PresenterMovies()
         let viewModelController = MoviesControllerViewModel(dataSource: dataSource)
         let controller = MoviesViewController(viewModel: viewModelController)
-
+        navigation?.setNavigationBarHidden(true, animated: false)
         presenter.interactor = interactor
         presenter.router = self
         controller.presenter = presenter
